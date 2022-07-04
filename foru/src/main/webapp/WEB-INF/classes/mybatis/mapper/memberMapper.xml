@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+	<insert id="insertMember" parameterType="com.sp.foru.member.Member">
+		INSERT INTO member(memberIdx, membership, userId, userName, userPwd, register_date, email, email2, 
+							tel, tel2, birth, zip, addr1, addr2, enabled, modify_date) 
+		VALUES(seq_member.NEXTVAL, #{membership} ,#{userId}, #{userName}, #{userPwd}, SYSDATE, #{email}, #{email2}, 
+							#{tel}, #{tel2}, #{birth}, #{zip}, #{addr1}, #{addr2}, 1, SYSDATE)
+	</insert>
+	
+	<select id="loginMember" parameterType="String" resultType="com.sp.foru.member.Member">
+		SELECT memberIdx, memberShip, userId, userPwd, userName, modify_date, last_login
+		FROM Member
+		WHERE userId = #{userId}
+	</select>
+	
+	<update id="updateLastLogin" parameterType="String">
+		UPDATE member SET last_login = SYSDATE WHERE userId=#{userId}
+	</update>
+
+</mapper>
